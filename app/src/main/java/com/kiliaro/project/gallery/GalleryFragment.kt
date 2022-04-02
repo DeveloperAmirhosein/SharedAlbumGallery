@@ -1,7 +1,6 @@
 package com.kiliaro.project.gallery
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,7 +13,6 @@ import com.kiliaro.project.publicpackage.retrofit.Error
 import com.kiliaro.project.publicpackage.retrofit.Progress
 import com.kiliaro.project.publicpackage.retrofit.Result
 import com.kiliaro.project.publicpackage.retrofit.Success
-import com.kiliaro.project.publicpackage.utils.hide
 
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     // we can pass this key to this fragment so this gallery fragment can be
@@ -22,11 +20,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val sharedKey: String = "djlCbGusTJamg_ca4axEVw"
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
-    private val adapter by lazy {
-        GalleryAdapter()
-    }
-
-
+    private val adapter by lazy { GalleryAdapter() }
     private val viewModel: GalleryViewModel by viewModels {
         GalleryViewModelFactory(SharedAlbumRepository(sharedKey))
     }
@@ -37,17 +31,16 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         observe()
         viewModel.getSharedAlbum()
         binding.imagesList.adapter = adapter
-        binding.imagesList.layoutManager = GridLayoutManager(requireActivity(),3)
+        binding.imagesList.layoutManager = GridLayoutManager(requireActivity(), 3)
     }
 
     private fun observe() {
         viewModel.sharedAlbumLiveData.observe(viewLifecycleOwner, {
-            handleAlbumLiveData(it)
+            handleResult(it)
         })
     }
 
-
-    private fun handleAlbumLiveData(result: Result<List<PhotoEntity>>?) {
+    private fun handleResult(result: Result<List<PhotoEntity>>?) {
         when (result) {
             is Success -> {
                 binding.progressBar.hide()
@@ -58,7 +51,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             }
             is Error -> {
                 binding.progressBar.hide()
-                Toast.makeText(requireActivity(),result.errorMessage,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), result.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
