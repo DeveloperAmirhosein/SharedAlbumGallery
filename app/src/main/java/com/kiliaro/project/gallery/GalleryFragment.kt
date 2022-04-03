@@ -58,6 +58,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.imagesList.adapter = null
         _binding = null
     }
 }
