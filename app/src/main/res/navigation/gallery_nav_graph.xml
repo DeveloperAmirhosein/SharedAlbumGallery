@@ -7,5 +7,16 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.kiliaro.project.gallery.GalleryFragment"
-        android:label="GalleryFragment" />
+        android:label="GalleryFragment" >
+        <action
+            android:id="@+id/action_galleryFragment_to_fullScreenImageFragment"
+            app:destination="@id/fullScreenImageFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fullScreenImageFragment"
+        android:name="com.kiliaro.project.fullscreenimage.FullScreenImageFragment"
+        android:label="FullScreenImageFragment" />
+
+
 </navigation>

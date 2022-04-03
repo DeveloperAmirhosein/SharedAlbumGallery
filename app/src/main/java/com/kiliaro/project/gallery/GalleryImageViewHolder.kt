@@ -2,16 +2,31 @@ package com.kiliaro.project.gallery
 
 import androidx.recyclerview.widget.RecyclerView
 import com.kiliaro.project.databinding.ItemPhotoGridBinding
+import com.kiliaro.project.publicpackage.OnItemClickListener
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.imageloader.loadImage
 import com.kiliaro.project.publicpackage.utils.dp
 import kotlin.math.max
 
-class GalleryImageViewHolder(private val binding: ItemPhotoGridBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun bind(photoEntity: PhotoEntity) {
-        photoEntity.thumbnailUrl?.let {
+class GalleryImageViewHolder(
+    private val binding: ItemPhotoGridBinding,
+    private val onItemClickListener: OnItemClickListener<PhotoEntity>
+) : RecyclerView.ViewHolder(binding.root) {
+    private lateinit var photoEntity: PhotoEntity
 
+    init {
+        itemView.setOnClickListener {
+            onItemClickListener.onClick(
+                photoEntity,
+                adapterPosition,
+                itemView
+            )
+        }
+    }
+
+    fun bind(photoEntity: PhotoEntity) {
+        this.photoEntity = photoEntity
+        photoEntity.thumbnailUrl?.let {
             // we use post{} here because if we do not use it
             // the getWidth() and height() methods are calculated before the time
             // in which view is drawn..

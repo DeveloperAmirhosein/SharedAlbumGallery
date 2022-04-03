@@ -5,9 +5,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kiliaro.project.R
 import com.kiliaro.project.databinding.FragmentGalleryBinding
+import com.kiliaro.project.publicpackage.Constants.INTENT_PHOTO_ENTITY
+import com.kiliaro.project.publicpackage.OnItemClickListener
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.retrofit.Error
 import com.kiliaro.project.publicpackage.retrofit.Progress
@@ -20,14 +24,27 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val sharedKey: String = "djlCbGusTJamg_ca4axEVw"
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
-    private val adapter by lazy { GalleryAdapter() }
+    private val adapter by lazy {
+        GalleryAdapter(object : OnItemClickListener<PhotoEntity> {
+            override fun onClick(item: PhotoEntity, position: Int, clickedView: View) {
+                val bundle = Bundle()
+                bundle.putParcelable(INTENT_PHOTO_ENTITY, item)
+                navController?.navigate(
+                    R.id.action_galleryFragment_to_fullScreenImageFragment,
+                    bundle
+                )
+            }
+        })
+    }
     private val viewModel: GalleryViewModel by viewModels {
         GalleryViewModelFactory(SharedAlbumRepository(sharedKey))
     }
+    private var navController: NavController? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentGalleryBinding.bind(view)
+        navController = Navigation.findNavController(view)
         observe()
         viewModel.getSharedAlbum()
         binding.imagesList.adapter = adapter
