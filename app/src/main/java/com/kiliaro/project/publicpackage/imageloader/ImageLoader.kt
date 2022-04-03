@@ -4,7 +4,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.Transformation
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.kiliaro.project.publicpackage.utils.dp
 
@@ -39,19 +41,23 @@ object ImageLoader {
             .with(imageView.context)
             .load(modifiedUrI)
             .transform(transformationType)
-            .fitCenter()
             .into(imageView)
     }
 
 }
 
-val DEFAULT_BORDER_RADIUS = 4.dp
+// this should be moved to dimens
+val DEFAULT_BORDER_RADIUS = 10.dp
+
 fun ImageView.loadImage(
     url: String,
     width: Int? = null,
     height: Int? = null,
     serverResizeMode: ServerResizeMode = ServerResizeMode.Crop,
-    transformationType: Transformation<Bitmap> = RoundedCorners(DEFAULT_BORDER_RADIUS)
+    transformationType: Transformation<Bitmap> = MultiTransformation(
+        FitCenter(),
+        RoundedCorners(DEFAULT_BORDER_RADIUS)
+    )
 ) {
     ImageLoader.load(url, this, width, height, serverResizeMode, transformationType)
 }
