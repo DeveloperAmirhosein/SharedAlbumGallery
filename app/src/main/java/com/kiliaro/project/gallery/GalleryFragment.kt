@@ -52,9 +52,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     }
 
     private fun observe() {
-        viewModel.sharedAlbumLiveData.observe(viewLifecycleOwner, {
+        viewModel.sharedAlbumLiveData.observe(viewLifecycleOwner) {
             handleResult(it)
-        })
+        }
     }
 
     private fun handleResult(result: Result<List<PhotoEntity>>?) {
