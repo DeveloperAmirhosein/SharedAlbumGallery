@@ -14,7 +14,7 @@ import com.kiliaro.project.publicpackage.imageloader.loadImage
 import com.kiliaro.project.publicpackage.utils.doIfViewIsReady
 import com.kiliaro.project.publicpackage.utils.hide
 import com.kiliaro.project.publicpackage.utils.show
-import com.kiliaro.project.publicpackage.utils.toProperDateFormat
+import com.kiliaro.project.publicpackage.utils.toMoreReadableDateFormat
 
 class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
 
@@ -35,7 +35,7 @@ class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentFullScreenImageBinding.bind(view)
         binding.progressBar.show()
-        binding.createTime.text = photoEntity.createdAt?.toProperDateFormat()
+        binding.createTime.text = photoEntity.createdAt?.toMoreReadableDateFormat()
         binding.backButton.setOnClickListener { requireActivity().onBackPressed() }
         binding.mainImage.loadImage(
             url = photoEntity.thumbnailUrl,

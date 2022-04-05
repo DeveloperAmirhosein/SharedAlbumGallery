@@ -3,14 +3,17 @@ package com.kiliaro.project.publicpackage.utils
 import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-/** dp to px*/
+/**  dp to px*/
 val Int.dp: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-fun String.toProperDateFormat(): String? {
+/** Converts server format to a more readable format
+ */
+fun String.toMoreReadableDateFormat(): String? {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
     val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
     var date: Date? = null
@@ -22,6 +25,7 @@ fun String.toProperDateFormat(): String? {
     return outputFormat.format(date)
 }
 
+/** Does a runnable if the view of the fragment is ready(created and not destroyed) */
 fun Fragment.doIfViewIsReady(runnable: Runnable) {
     var isViewAvailable = false
     try {
@@ -32,4 +36,10 @@ fun Fragment.doIfViewIsReady(runnable: Runnable) {
     } catch (ignored: Exception) {
     }
     if (isViewAvailable) runnable.run()
+}
+
+/** Converts byte to Mega byte */
+fun Int.bToMb(): String {
+    val decimalFormat = DecimalFormat("###.#")
+    return (decimalFormat.format(this / (1024.0 * 1024.0))).toString() + "MB"
 }

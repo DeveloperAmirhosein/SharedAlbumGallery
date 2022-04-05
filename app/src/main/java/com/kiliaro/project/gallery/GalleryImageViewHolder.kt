@@ -6,6 +6,7 @@ import com.kiliaro.project.databinding.ItemPhotoGridBinding
 import com.kiliaro.project.publicpackage.OnItemClickListener
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.imageloader.loadImage
+import com.kiliaro.project.publicpackage.utils.bToMb
 
 class GalleryImageViewHolder(
     private val binding: ItemPhotoGridBinding,
@@ -22,13 +23,15 @@ class GalleryImageViewHolder(
             )
         }
     }
-
     fun bind(photoEntity: PhotoEntity) {
         this.photoEntity = photoEntity
         photoEntity.thumbnailUrl?.apply {
             binding.image.doOnLayout {
                 binding.image.loadImage(this, width = it.width, height = it.height)
             }
+        }
+        photoEntity.size?.let {
+            binding.sizeOfImage.text = it.bToMb()
         }
     }
 
