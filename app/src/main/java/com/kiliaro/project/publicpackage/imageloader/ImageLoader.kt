@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.kiliaro.project.R
-import com.kiliaro.project.publicpackage.utils.dp
+import com.kiliaro.project.publicpackage.utils.dpToPx
 
 object ImageLoader {
 
@@ -83,7 +83,7 @@ object ImageLoader {
 }
 
 // this should be moved to dimens
-val DEFAULT_BORDER_RADIUS = 10.dp
+val DEFAULT_BORDER_RADIUS = 10.dpToPx
 
 fun ImageView.loadImage(
     url: String?,

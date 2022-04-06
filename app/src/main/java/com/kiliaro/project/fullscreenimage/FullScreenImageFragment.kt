@@ -48,7 +48,6 @@ class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
                         binding.progressBar.hide()
                     }
                 }
-
                 override fun onResourceFailed(message: String?) {
                     doIfViewIsReady {
                         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT)

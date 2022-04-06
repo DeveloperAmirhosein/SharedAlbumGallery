@@ -46,7 +46,6 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         _binding = FragmentGalleryBinding.bind(view)
         navController = Navigation.findNavController(view)
         observe()
-        viewModel.getSharedAlbum()
         binding.imagesList.adapter = adapter
         binding.imagesList.layoutManager = GridLayoutManager(requireActivity(), 3)
     }

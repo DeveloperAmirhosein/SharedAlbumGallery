@@ -9,6 +9,10 @@ class GalleryViewModel(private val repository: SharedAlbumRepository) : ViewMode
     val sharedAlbumLiveData: LiveData<Result<List<PhotoEntity>>> =
         repository.getSharedAlbumLiveData()
 
+    init {
+        getSharedAlbum()
+    }
+
     fun getSharedAlbum() {
         repository.getSharedAlbum()
     }

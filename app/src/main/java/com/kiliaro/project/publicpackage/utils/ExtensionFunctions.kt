@@ -7,12 +7,10 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**  dp to px*/
-val Int.dp: Int
+val Int.dpToPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-/** Converts server format to a more readable format
- */
+
 fun String.toMoreReadableDateFormat(): String? {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
     val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
@@ -28,9 +26,8 @@ fun String.toMoreReadableDateFormat(): String? {
 /** Does a runnable if the view of the fragment is ready(created and not destroyed) */
 fun Fragment.doIfViewIsReady(runnable: Runnable) {
     var isViewAvailable = false
+    // We use try catch here because throwing exception also means that view is not Created or is destroyed
     try {
-        // if viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)
-        // throws exception or if it is false, it means the view of fragment is not ready or destroyed
         isViewAvailable =
             viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)
     } catch (ignored: Exception) {
@@ -38,7 +35,6 @@ fun Fragment.doIfViewIsReady(runnable: Runnable) {
     if (isViewAvailable) runnable.run()
 }
 
-/** Converts byte to Mega byte */
 fun Int.bToMb(): String {
     val decimalFormat = DecimalFormat("###.#")
     return (decimalFormat.format(this / (1024.0 * 1024.0))).toString() + "MB"
