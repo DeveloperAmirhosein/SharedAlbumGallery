@@ -15,7 +15,7 @@ class GalleryAdapter(private val onItemClickListener: OnItemClickListener<PhotoE
         val binding = ItemPhotoGridBinding.bind(
             LayoutInflater.from(parent.context).inflate(R.layout.item_photo_grid, parent, false)
         )
-        return GalleryImageViewHolder(binding,onItemClickListener)
+        return GalleryImageViewHolder(binding, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: GalleryImageViewHolder, position: Int) {
@@ -27,7 +27,8 @@ class GalleryAdapter(private val onItemClickListener: OnItemClickListener<PhotoE
     fun setData(photoList: List<PhotoEntity>) {
         list.clear()
         list.addAll(photoList)
-        notifyDataSetChanged()
+        // it is better to use DiffUtil if cases are going to be more complicated
+        notifyItemRangeInserted(0, list.size)
     }
 
 }
