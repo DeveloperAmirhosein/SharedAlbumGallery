@@ -48,6 +48,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         observe()
         binding.imagesList.adapter = adapter
         binding.imagesList.layoutManager = GridLayoutManager(requireActivity(), 3)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getRefreshedSharedAlbum()
+        }
     }
 
     private fun observe() {
@@ -61,12 +64,14 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             is Success -> {
                 binding.progressBar.hide()
                 adapter.setData(result.data)
+                binding.swipeRefreshLayout.isRefreshing = false
             }
             is Progress -> {
                 binding.progressBar.show()
             }
             is Error -> {
                 binding.progressBar.hide()
+                binding.swipeRefreshLayout.isRefreshing = false
                 Toast.makeText(requireActivity(), result.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }

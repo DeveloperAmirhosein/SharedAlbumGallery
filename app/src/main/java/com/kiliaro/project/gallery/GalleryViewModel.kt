@@ -10,10 +10,15 @@ class GalleryViewModel(private val repository: SharedAlbumRepository) : ViewMode
         repository.getSharedAlbumLiveData()
 
     init {
-        getSharedAlbum()
+        repository.getSharedAlbum()
     }
 
-    fun getSharedAlbum() {
-        repository.getSharedAlbum()
+    fun getRefreshedSharedAlbum() {
+        repository.getRefreshedSharedAlbums()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository.onCleared()
     }
 }

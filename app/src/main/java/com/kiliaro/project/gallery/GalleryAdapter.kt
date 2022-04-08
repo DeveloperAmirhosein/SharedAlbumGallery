@@ -28,7 +28,7 @@ class GalleryAdapter(private val onItemClickListener: OnItemClickListener<PhotoE
         list.clear()
         list.addAll(photoList)
         // it is better to use DiffUtil if cases are going to be more complicated
-        notifyItemRangeInserted(0, list.size)
+        notifyDataSetChanged()
     }
 
 }

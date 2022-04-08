@@ -52,7 +52,7 @@ object RetrofitSingleTon {
             )
         }.build()
 
-    fun invalidateCacheForSpecificCall(call: Call<*>) {
+    fun invalidateCacheForAnSpecificCall(call: Call<*>) {
         val url = call.request().url().toString()
         val urlIterator = cache.urls()
         while (urlIterator.hasNext()) {

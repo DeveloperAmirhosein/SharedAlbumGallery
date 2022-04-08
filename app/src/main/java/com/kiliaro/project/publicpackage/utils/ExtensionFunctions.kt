@@ -62,5 +62,5 @@ fun Context.hasNetwork(): Boolean {
 }
 
 fun Call<*>.invalidateCache() {
-    RetrofitSingleTon.invalidateCacheForSpecificCall(this)
+    RetrofitSingleTon.invalidateCacheForAnSpecificCall(this)
 }
