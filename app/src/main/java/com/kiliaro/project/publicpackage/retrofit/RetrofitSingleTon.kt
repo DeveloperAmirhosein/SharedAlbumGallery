@@ -6,12 +6,12 @@ import com.kiliaro.project.publicpackage.utils.hasNetwork
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitSingleTon {
-    private const val HEADER_CACHE_CONTROL = "Cache-Control"
     private const val HEADER_PRAGMA = "Pragma"
     private const val CACHE_MAX_AGE_DAYS = 7
     private const val CACHE_VALID_AGE_SECONDS = 5
@@ -51,5 +51,15 @@ object RetrofitSingleTon {
                     ).build()
             )
         }.build()
+
+    fun invalidateCacheForSpecificCall(call: Call<*>) {
+        val url = call.request().url().toString()
+        val urlIterator = cache.urls()
+        while (urlIterator.hasNext()) {
+            if (urlIterator.next().startsWith(url)) {
+                urlIterator.remove()
+            }
+        }
+    }
 
 }

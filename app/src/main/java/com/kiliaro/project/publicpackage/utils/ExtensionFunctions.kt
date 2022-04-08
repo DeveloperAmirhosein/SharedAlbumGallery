@@ -7,6 +7,8 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import com.kiliaro.project.publicpackage.retrofit.RetrofitSingleTon
+import retrofit2.Call
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +29,8 @@ fun String.toMoreReadableDateFormat(): String? {
     return outputFormat.format(date)
 }
 
-/** Does a runnable if the view of the fragment is ready(created and not destroyed) */
+
+/** Does a runnable if the view of the fragment is created and not destroyed */
 fun Fragment.doIfViewIsReady(runnable: Runnable) {
     var isViewAvailable = false
     // We use try catch here because throwing exception also means that view is not Created or is destroyed
@@ -39,10 +42,12 @@ fun Fragment.doIfViewIsReady(runnable: Runnable) {
     if (isViewAvailable) runnable.run()
 }
 
+
 fun Int.bToMb(): String {
     val decimalFormat = DecimalFormat("###.#")
     return (decimalFormat.format(this / (1024.0 * 1024.0))).toString() + "MB"
 }
+
 
 fun Context.hasNetwork(): Boolean {
     (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.apply {
@@ -54,4 +59,8 @@ fun Context.hasNetwork(): Boolean {
         else return (activeNetworkInfo?.isConnected == true)
     }
     return false
+}
+
+fun Call<*>.invalidateCache() {
+    RetrofitSingleTon.invalidateCacheForSpecificCall(this)
 }
