@@ -60,6 +60,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     }
 
     private fun handleResult(result: Result<List<PhotoEntity>>?) {
+        if (result?.isConsumed == true) return
         when (result) {
             is Success -> {
                 binding.progressBar.hide()
@@ -74,6 +75,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                 binding.swipeRefreshLayout.isRefreshing = false
                 adapter.deleteList()
                 Toast.makeText(requireActivity(), result.errorMessage, Toast.LENGTH_SHORT).show()
+                viewModel.consumeError()
             }
         }
     }

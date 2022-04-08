@@ -47,4 +47,9 @@ class SharedAlbumRepository(private val sharedKey: String) {
         getSharedAlbum()
     }
 
+    fun consumeError() {
+        if (sharedAlbumLiveData.value is Error)
+            sharedAlbumLiveData.value?.isConsumed = true
+    }
+
 }
