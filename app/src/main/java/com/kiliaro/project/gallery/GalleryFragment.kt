@@ -16,6 +16,8 @@ import com.kiliaro.project.publicpackage.retrofit.Error
 import com.kiliaro.project.publicpackage.retrofit.Progress
 import com.kiliaro.project.publicpackage.retrofit.Result
 import com.kiliaro.project.publicpackage.retrofit.Success
+import com.kiliaro.project.publicpackage.utils.disable
+import com.kiliaro.project.publicpackage.utils.enable
 import com.kiliaro.project.publicpackage.utils.hide
 import com.kiliaro.project.publicpackage.utils.show
 
@@ -73,11 +75,14 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             }
             is Progress -> {
                 binding.progressBar.show()
+                binding.errorView.retryButton.disable()
             }
             is Error -> {
                 binding.progressBar.hide()
                 binding.swipeRefreshLayout.isRefreshing = false
+                binding.errorView.errorText.text = result.errorMessage
                 binding.errorView.rootView.show()
+                binding.errorView.retryButton.enable()
             }
         }
     }

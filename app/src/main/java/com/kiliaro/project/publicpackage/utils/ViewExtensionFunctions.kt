@@ -9,3 +9,11 @@ fun View.show() {
 fun View.hide() {
     this.visibility = View.GONE
 }
+
+fun View.enable() {
+    isEnabled = true
+}
+
+fun View.disable() {
+    isEnabled = false
+}

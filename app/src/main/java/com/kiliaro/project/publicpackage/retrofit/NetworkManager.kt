@@ -1,8 +1,11 @@
 package com.kiliaro.project.publicpackage.retrofit
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import com.kiliaro.project.main.MyApplication
 import com.kiliaro.project.publicpackage.retrofit.Service.Companion.API_URL
-import com.kiliaro.project.publicpackage.utils.hasNetwork
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -11,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-object RetrofitSingleTon {
+object NetworkManager {
     private const val HEADER_PRAGMA = "Pragma"
     private const val CACHE_MAX_AGE_DAYS = 7
     private const val CACHE_VALID_AGE_SECONDS = 5
@@ -44,7 +47,7 @@ object RetrofitSingleTon {
                     .cacheControl(
                         CacheControl.Builder()
                             .apply {
-                                if (MyApplication.getAppContext().hasNetwork())
+                                if (isNetworkAvailable())
                                     maxAge(CACHE_VALID_AGE_SECONDS, TimeUnit.SECONDS)
                                 else maxStale(CACHE_MAX_AGE_DAYS, TimeUnit.DAYS)
                             }.build()
@@ -60,6 +63,19 @@ object RetrofitSingleTon {
                 urlIterator.remove()
             }
         }
+    }
+
+    fun isNetworkAvailable(): Boolean {
+        val context = MyApplication.getAppContext()
+        (context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) getNetworkCapabilities(activeNetwork)?.takeIf {
+                it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                        it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                        it.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+            }?.apply { return true }
+            else return (activeNetworkInfo?.isConnected == true)
+        }
+        return false
     }
 
 }
