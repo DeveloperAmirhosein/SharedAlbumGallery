@@ -72,6 +72,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             is Error -> {
                 binding.progressBar.hide()
                 binding.swipeRefreshLayout.isRefreshing = false
+                adapter.deleteList()
                 Toast.makeText(requireActivity(), result.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
