@@ -2,7 +2,6 @@ package com.kiliaro.project.gallery
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -17,6 +16,8 @@ import com.kiliaro.project.publicpackage.retrofit.Error
 import com.kiliaro.project.publicpackage.retrofit.Progress
 import com.kiliaro.project.publicpackage.retrofit.Result
 import com.kiliaro.project.publicpackage.retrofit.Success
+import com.kiliaro.project.publicpackage.utils.hide
+import com.kiliaro.project.publicpackage.utils.show
 
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     // we can pass this key to this fragment so this gallery fragment can be
@@ -51,6 +52,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getRefreshedSharedAlbum()
         }
+        binding.errorView.retryButton.setOnClickListener {
+            viewModel.getRefreshedSharedAlbum()
+        }
     }
 
     private fun observe() {
@@ -60,12 +64,12 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     }
 
     private fun handleResult(result: Result<List<PhotoEntity>>?) {
-        if (result?.isConsumed == true) return
         when (result) {
             is Success -> {
                 binding.progressBar.hide()
                 adapter.setData(result.data)
                 binding.swipeRefreshLayout.isRefreshing = false
+                binding.errorView.rootView.hide()
             }
             is Progress -> {
                 binding.progressBar.show()
@@ -73,9 +77,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             is Error -> {
                 binding.progressBar.hide()
                 binding.swipeRefreshLayout.isRefreshing = false
-                adapter.deleteList()
-                Toast.makeText(requireActivity(), result.errorMessage, Toast.LENGTH_SHORT).show()
-                viewModel.consumeError()
+                binding.errorView.rootView.show()
             }
         }
     }

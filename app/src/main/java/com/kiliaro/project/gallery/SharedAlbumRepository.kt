@@ -24,7 +24,10 @@ class SharedAlbumRepository(private val sharedKey: String) {
                     response: Response<List<PhotoEntity>>
                 ) {
                     response.body()?.let {
-                        sharedAlbumLiveData.postValue(Success(it))
+                        if (response.isSuccessful)
+                            sharedAlbumLiveData.postValue(Success(it))
+                        else
+                            sharedAlbumLiveData.postValue(Error("Response is null"))
                     } ?: run {
                         sharedAlbumLiveData.postValue(Error("Response is null"))
                     }
@@ -45,11 +48,6 @@ class SharedAlbumRepository(private val sharedKey: String) {
     fun getRefreshedSharedAlbums() {
         RetrofitSingleTon.service.getSharedAlbum(sharedKey).invalidateCache()
         getSharedAlbum()
-    }
-
-    fun consumeError() {
-        if (sharedAlbumLiveData.value is Error)
-            sharedAlbumLiveData.value?.isConsumed = true
     }
 
 }

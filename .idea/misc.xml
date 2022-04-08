@@ -6,7 +6,8 @@
         <entry key="..\:/android workspace/project/app/src/main/res/drawable/ic_image_place_holder.xml" value="0.14635416666666667" />
         <entry key="..\:/android workspace/project/app/src/main/res/layout/activity_main.xml" value="0.14855072463768115" />
         <entry key="..\:/android workspace/project/app/src/main/res/layout/fragment_full_screen_image.xml" value="0.2" />
-        <entry key="..\:/android workspace/project/app/src/main/res/layout/fragment_gallery.xml" value="0.25" />
+        <entry key="..\:/android workspace/project/app/src/main/res/layout/fragment_gallery.xml" value="0.22" />
+        <entry key="..\:/android workspace/project/app/src/main/res/layout/include_error_view.xml" value="0.2" />
         <entry key="..\:/android workspace/project/app/src/main/res/layout/item_photo_grid.xml" value="0.2" />
       </map>
     </option>

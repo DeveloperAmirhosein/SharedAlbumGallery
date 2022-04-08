@@ -35,8 +35,5 @@ class GalleryAdapter(private val onItemClickListener: OnItemClickListener<PhotoE
         DiffUtil.calculateDiff(diffUtilCallback).dispatchUpdatesTo(this)
     }
 
-    fun deleteList() {
-        setData(ArrayList())
-    }
 
 }
