@@ -1,6 +1,10 @@
 package com.kiliaro.project.publicpackage.utils
 
+import android.content.Context
 import android.content.res.Resources
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import java.text.DecimalFormat
@@ -38,4 +42,16 @@ fun Fragment.doIfViewIsReady(runnable: Runnable) {
 fun Int.bToMb(): String {
     val decimalFormat = DecimalFormat("###.#")
     return (decimalFormat.format(this / (1024.0 * 1024.0))).toString() + "MB"
+}
+
+fun Context.hasNetwork(): Boolean {
+    (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) getNetworkCapabilities(activeNetwork)?.takeIf {
+            it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                    it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    it.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+        }?.apply { return true }
+        else return (activeNetworkInfo?.isConnected == true)
+    }
+    return false
 }
