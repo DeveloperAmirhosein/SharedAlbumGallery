@@ -17,8 +17,4 @@ class GalleryViewModel(private val repository: SharedAlbumRepository) : ViewMode
         repository.getRefreshedSharedAlbums()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        repository.onCleared()
-    }
 }
