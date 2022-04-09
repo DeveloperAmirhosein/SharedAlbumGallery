@@ -4,28 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    android:fitsSystemWindows="true">
+    android:background="@color/black">
 
     <uk.co.senab.photoview.PhotoView
         android:id="@+id/main_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_image_place_holder" />
+        android:scaleType="fitCenter" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|start"
-        android:background="?attr/selectableItemBackground"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:fitsSystemWindows="true"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackground"
         android:scaleType="center"
-        app:tint="@color/white"
         app:srcCompat="@drawable/ic_arrow_back"
+        app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
     <ProgressBar
@@ -43,12 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:padding="4dp"
         android:layout_marginBottom="16dp"
-        android:textSize="16sp"
-        tools:text="08/06/2021"
+        android:background="@color/dark_semi_transparent"
+        android:padding="4dp"
         android:textColor="@color/white"
-        android:background="#7f000000"
-        />
+        android:textSize="16sp"
+        tools:text="08/06/2021" />
 
 </FrameLayout>
