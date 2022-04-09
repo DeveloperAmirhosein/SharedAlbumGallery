@@ -3,4 +3,5 @@
     <string name="general_connection_error">General connection error</string>
     <string name="retry">Retry</string>
     <string name="internet_connection_error">No internet connection</string>
+    <string name="image_load_problem">Was not able to load the image</string>
 </resources>

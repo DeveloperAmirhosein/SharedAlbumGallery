@@ -11,10 +11,8 @@ import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.imageloader.ServerResizeMode
 import com.kiliaro.project.publicpackage.imageloader.SimpleGlideRequestListener
 import com.kiliaro.project.publicpackage.imageloader.loadImage
-import com.kiliaro.project.publicpackage.utils.doIfViewIsReady
-import com.kiliaro.project.publicpackage.utils.hide
-import com.kiliaro.project.publicpackage.utils.show
-import com.kiliaro.project.publicpackage.utils.toMoreReadableDateFormat
+import com.kiliaro.project.publicpackage.retrofit.NetworkManager
+import com.kiliaro.project.publicpackage.utils.*
 
 class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
 
@@ -48,10 +46,16 @@ class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
                         binding.progressBar.hide()
                     }
                 }
+
                 override fun onResourceFailed(message: String?) {
                     doIfViewIsReady {
-                        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(
+                            requireActivity(),
+                            if (NetworkManager.isNetworkAvailable())
+                                R.string.image_load_problem.getString() else
+                                R.string.internet_connection_error.getString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         binding.progressBar.hide()
                     }
                 }
