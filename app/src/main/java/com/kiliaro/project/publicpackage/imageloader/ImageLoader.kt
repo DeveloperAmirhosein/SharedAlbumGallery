@@ -48,7 +48,7 @@ object ImageLoader {
                 appendQueryParameter(SERVER_RESIZE_MODE, serverResizeMode.modeName)
             }.build()
 
-        Glide.with(imageView.context).load(modifiedUrI).apply {
+        Glide.with(imageView).load(modifiedUrI).apply {
             transformationType?.let { transform(transformationType) }
             requestListener?.let {
                 addListener(object : RequestListener<Drawable> {
