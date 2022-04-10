@@ -40,7 +40,8 @@ fun Fragment.doIfViewIsReady(runnable: Runnable) {
 }
 
 
-fun Int.bToMb(): String {
+fun Int.byteIntToMbString(): String {
+    if (this < 0) return "0MB"
     val decimalFormat = DecimalFormat("###.#")
     return (decimalFormat.format(this / (1024.0 * 1024.0))).toString() + "MB"
 }
@@ -51,6 +52,6 @@ fun Call<*>.invalidateCache() {
 }
 
 // Returns String resource from strings.xml
-fun  Int.getString(): String {
+fun Int.getString(): String {
     return MyApplication.getAppContext().getString(this)
 }
