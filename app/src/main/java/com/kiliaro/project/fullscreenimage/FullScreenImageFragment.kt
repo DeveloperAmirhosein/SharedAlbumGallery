@@ -32,9 +32,9 @@ class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentFullScreenImageBinding.bind(view)
-        binding.progressBar.show()
         binding.createTime.text = photoEntity.createdAt?.toMoreReadableDateFormat()
         binding.backButton.setOnClickListener { requireActivity().onBackPressed() }
+        binding.progressBar.show()
         binding.mainImage.loadImage(
             url = photoEntity.thumbnailUrl,
             transformationType = null,
