@@ -10,9 +10,6 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-val Int.dpToPx: Int
-    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
-
 
 fun String.toMoreReadableDateFormat(): String? {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
@@ -54,4 +51,8 @@ fun Call<*>.invalidateCache() {
 // Returns String resource from strings.xml
 fun Int.getString(): String {
     return MyApplication.getAppContext().getString(this)
+}
+
+fun Int.getDimenResource(): Int {
+    return MyApplication.getAppContext().resources.getDimensionPixelSize(this)
 }

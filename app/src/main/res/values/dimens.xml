@@ -4,4 +4,5 @@
     <dimen name="default_margin_padding_half">8dp</dimen>
     <dimen name="text_size_big_1">16sp</dimen>
     <dimen name="text_with_background_padding">4dp</dimen>
+    <dimen name="default_images_corner_radius">10dp</dimen>
 </resources>
