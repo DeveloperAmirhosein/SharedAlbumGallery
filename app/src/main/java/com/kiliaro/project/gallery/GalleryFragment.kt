@@ -27,6 +27,12 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val sharedKey: String = "djlCbGusTJamg_ca4axEVw"
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
+    private var navController: NavController? = null
+
+    private val viewModel: GalleryViewModel by viewModels {
+        GalleryViewModelFactory(DefaultSharedAlbumRepository(sharedKey))
+    }
+
     private val adapter by lazy {
         GalleryAdapter(object : OnItemClickListener<PhotoEntity> {
             override fun onClick(item: PhotoEntity, position: Int, clickedView: View) {
@@ -39,10 +45,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             }
         })
     }
-    private val viewModel: GalleryViewModel by viewModels {
-        GalleryViewModelFactory(SharedAlbumRepository(sharedKey))
-    }
-    private var navController: NavController? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -1,52 +1,11 @@
 package com.kiliaro.project.gallery
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.kiliaro.project.R
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
-import com.kiliaro.project.publicpackage.retrofit.*
-import com.kiliaro.project.publicpackage.utils.getString
-import com.kiliaro.project.publicpackage.utils.invalidateCache
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.kiliaro.project.publicpackage.retrofit.Result
 
-class SharedAlbumRepository(private val sharedKey: String) {
-    private val sharedAlbumLiveData: MutableLiveData<Result<List<PhotoEntity>>> = MutableLiveData()
-
-    fun getSharedAlbumLiveData(): LiveData<Result<List<PhotoEntity>>> = sharedAlbumLiveData
-
-    fun getSharedAlbum() {
-        sharedAlbumLiveData.postValue(Progress())
-        NetworkManager.service.getSharedAlbum(sharedKey).enqueue(
-            object : Callback<List<PhotoEntity>> {
-                override fun onResponse(
-                    call: Call<List<PhotoEntity>>,
-                    response: Response<List<PhotoEntity>>
-                ) {
-                    response.body()?.let {
-                        if (response.isSuccessful) sharedAlbumLiveData.postValue(Success(it))
-                        else sharedAlbumLiveData.postValue(Error(R.string.general_connection_error.getString()))
-                    } ?: run {
-                        sharedAlbumLiveData.postValue(Error(R.string.general_connection_error.getString()))
-                    }
-                }
-
-                override fun onFailure(call: Call<List<PhotoEntity>>, throwable: Throwable) {
-                    sharedAlbumLiveData.postValue(
-                        if (NetworkManager.isNetworkAvailable().not())
-                            Error(R.string.internet_connection_error.getString(), throwable)
-                        else
-                            Error(R.string.general_connection_error.getString(), throwable)
-                    )
-                }
-            }
-        )
-    }
-
-    fun getRefreshedSharedAlbums() {
-        NetworkManager.service.getSharedAlbum(sharedKey).invalidateCache()
-        getSharedAlbum()
-    }
-
+interface SharedAlbumRepository {
+    fun getSharedAlbumLiveData(): LiveData<Result<List<PhotoEntity>>>
+    fun getSharedAlbum()
+    fun getRefreshedSharedAlbums()
 }
