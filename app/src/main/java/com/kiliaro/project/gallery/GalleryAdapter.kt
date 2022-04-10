@@ -11,10 +11,14 @@ import com.kiliaro.project.publicpackage.entities.PhotoEntity
 
 class GalleryAdapter(private val onItemClickListener: OnItemClickListener<PhotoEntity>) :
     RecyclerView.Adapter<GalleryImageViewHolder>() {
+
+    private val list: MutableList<PhotoEntity> = ArrayList()
+
     private val diffUtilCallback by lazy {
         GalleryListDifUtil()
     }
-    private val list: MutableList<PhotoEntity> = ArrayList()
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryImageViewHolder {
         val binding = ItemPhotoGridBinding.bind(
             LayoutInflater.from(parent.context).inflate(R.layout.item_photo_grid, parent, false)

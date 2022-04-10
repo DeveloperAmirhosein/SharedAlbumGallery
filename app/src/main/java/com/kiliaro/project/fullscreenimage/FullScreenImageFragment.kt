@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.kiliaro.project.R
 import com.kiliaro.project.databinding.FragmentFullScreenImageBinding
-import com.kiliaro.project.publicpackage.Constants.INTENT_PHOTO_ENTITY
+import com.kiliaro.project.publicpackage.GlobalConstants.INTENT_PHOTO_ENTITY
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.imageloader.ServerResizeMode
 import com.kiliaro.project.publicpackage.imageloader.SimpleGlideRequestListener
@@ -26,7 +26,7 @@ class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
     }
 
     private fun handleIntent() {
-        photoEntity = arguments?.getParcelable(INTENT_PHOTO_ENTITY)!!
+        photoEntity = requireNotNull(arguments?.getParcelable(INTENT_PHOTO_ENTITY))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,8 +52,8 @@ class FullScreenImageFragment : Fragment(R.layout.fragment_full_screen_image) {
                         Toast.makeText(
                             requireActivity(),
                             if (NetworkManager.isNetworkAvailable())
-                                R.string.image_load_problem.getString() else
-                                R.string.internet_connection_error.getString(),
+                                R.string.image_load_problem.getStringResource() else
+                                R.string.internet_connection_error.getStringResource(),
                             Toast.LENGTH_SHORT
                         ).show()
                         binding.progressBar.hide()

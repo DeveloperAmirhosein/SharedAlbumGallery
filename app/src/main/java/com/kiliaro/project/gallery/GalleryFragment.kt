@@ -9,7 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kiliaro.project.R
 import com.kiliaro.project.databinding.FragmentGalleryBinding
-import com.kiliaro.project.publicpackage.Constants.INTENT_PHOTO_ENTITY
+import com.kiliaro.project.publicpackage.GlobalConstants.INTENT_PHOTO_ENTITY
 import com.kiliaro.project.publicpackage.OnItemClickListener
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.retrofit.Error
@@ -27,7 +27,8 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val sharedKey: String = "djlCbGusTJamg_ca4axEVw"
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
-    private var navController: NavController? = null
+    private lateinit var navController: NavController
+    private val spanCount = 3
 
     private val viewModel: GalleryViewModel by viewModels {
         GalleryViewModelFactory(DefaultSharedAlbumRepository(sharedKey))
@@ -38,7 +39,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             override fun onClick(item: PhotoEntity, position: Int, clickedView: View) {
                 val bundle = Bundle()
                 bundle.putParcelable(INTENT_PHOTO_ENTITY, item)
-                navController?.navigate(
+                navController.navigate(
                     R.id.action_galleryFragment_to_fullScreenImageFragment,
                     bundle
                 )
@@ -53,7 +54,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         navController = Navigation.findNavController(view)
         observe()
         binding.imagesList.adapter = adapter
-        binding.imagesList.layoutManager = GridLayoutManager(requireActivity(), 3)
+        binding.imagesList.layoutManager = GridLayoutManager(requireActivity(), spanCount)
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getRefreshedSharedAlbum()
         }

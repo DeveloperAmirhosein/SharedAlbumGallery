@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 object NetworkManager {
     private const val HEADER_PRAGMA = "Pragma"
     private const val CACHE_MAX_AGE_DAYS = 7
-    private const val CACHE_VALID_AGE_SECONDS = 5
+    private const val CACHE_VALID_AGE_SECONDS = 60
     private const val TIMEOUT_SECONDS = 10L
     private const val CACHE_SIZE = 10 * 1024 * 1024L // 10 MB
     private val cache = Cache(MyApplication.getAppContext().cacheDir, CACHE_SIZE)

@@ -49,7 +49,7 @@ fun Call<*>.invalidateCache() {
 }
 
 // Returns String resource from strings.xml
-fun Int.getString(): String {
+fun Int.getStringResource(): String {
     return MyApplication.getAppContext().getString(this)
 }
 

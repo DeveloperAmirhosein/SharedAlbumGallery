@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.kiliaro.project.R
 import com.kiliaro.project.publicpackage.entities.PhotoEntity
 import com.kiliaro.project.publicpackage.retrofit.*
-import com.kiliaro.project.publicpackage.utils.getString
+import com.kiliaro.project.publicpackage.utils.getStringResource
 import com.kiliaro.project.publicpackage.utils.invalidateCache
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,18 +26,18 @@ class DefaultSharedAlbumRepository(private val sharedKey: String) : SharedAlbumR
                 ) {
                     response.body()?.let {
                         if (response.isSuccessful) sharedAlbumLiveData.postValue(Success(it))
-                        else sharedAlbumLiveData.postValue(Error(R.string.general_connection_error.getString()))
+                        else sharedAlbumLiveData.postValue(Error(R.string.general_connection_error.getStringResource()))
                     } ?: run {
-                        sharedAlbumLiveData.postValue(Error(R.string.general_connection_error.getString()))
+                        sharedAlbumLiveData.postValue(Error(R.string.general_connection_error.getStringResource()))
                     }
                 }
 
                 override fun onFailure(call: Call<List<PhotoEntity>>, throwable: Throwable) {
                     sharedAlbumLiveData.postValue(
                         if (NetworkManager.isNetworkAvailable().not())
-                            Error(R.string.internet_connection_error.getString(), throwable)
+                            Error(R.string.internet_connection_error.getStringResource(), throwable)
                         else
-                            Error(R.string.general_connection_error.getString(), throwable)
+                            Error(R.string.general_connection_error.getStringResource(), throwable)
                     )
                 }
             }

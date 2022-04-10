@@ -28,25 +28,15 @@ object ImageLoader {
     fun load(
         url: String?,
         imageView: ImageView,
-        width: Int?,
-        height: Int?,
+        width: Int? = null,
+        height: Int? = null,
         placeHolder: Int? = null,
         serverResizeMode: ServerResizeMode,
         requestListener: SimpleGlideRequestListener? = null,
         transformationType: Transformation<Bitmap>? = null
     ) {
         url ?: return
-        val modifiedUrI = Uri.parse(url)
-            .buildUpon()
-            .apply {
-                width?.let {
-                    appendQueryParameter(SERVER_WIDTH, it.toString())
-                }
-                height?.let {
-                    appendQueryParameter(SERVER_HEIGHT, it.toString())
-                }
-                appendQueryParameter(SERVER_RESIZE_MODE, serverResizeMode.modeName)
-            }.build()
+        val modifiedUrI = addNeededParametersToUrl(url, width, height, serverResizeMode)
 
         Glide.with(imageView).load(modifiedUrI).apply {
             transformationType?.let { transform(transformationType) }
@@ -80,10 +70,28 @@ object ImageLoader {
 
     }
 
+    fun addNeededParametersToUrl(
+        url: String?,
+        width: Int?,
+        height: Int?,
+        serverResizeMode: ServerResizeMode
+    ): Uri = Uri.parse(url)
+        .buildUpon()
+        .apply {
+            width?.let {
+                appendQueryParameter(SERVER_WIDTH, it.toString())
+            }
+            height?.let {
+                appendQueryParameter(SERVER_HEIGHT, it.toString())
+            }
+            appendQueryParameter(SERVER_RESIZE_MODE, serverResizeMode.modeName)
+        }.build()
+    // this should be moved to dimens
+
+
 }
 
-// this should be moved to dimens
-val DEFAULT_BORDER_RADIUS = R.dimen.default_images_corner_radius.getDimenResource()
+private val DEFAULT_BORDER_RADIUS = R.dimen.default_images_corner_radius.getDimenResource()
 
 fun ImageView.loadImage(
     url: String?,
