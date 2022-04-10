@@ -22,7 +22,7 @@ class ExtensionFunctionsKtTest {
     }
 
     @Test
-    fun `byteIntToMbString() should return in megaByte formatted string fo positive values`() {
+    fun `byteIntToMbString() should return in megaByte formatted string for positive values`() {
         val byteInput = 8562574
         assertThat(byteInput.byteIntToMbString(), `is`("8.2MB"))
     }

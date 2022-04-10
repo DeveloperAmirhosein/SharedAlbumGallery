@@ -7,5 +7,5 @@ import com.kiliaro.project.publicpackage.retrofit.Result
 interface SharedAlbumRepository {
     fun getSharedAlbumLiveData(): LiveData<Result<List<PhotoEntity>>>
     fun getSharedAlbum()
-    fun getRefreshedSharedAlbums()
+    fun getRefreshedSharedAlbum()
 }

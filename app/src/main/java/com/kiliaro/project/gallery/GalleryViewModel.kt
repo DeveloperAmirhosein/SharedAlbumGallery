@@ -14,7 +14,7 @@ class GalleryViewModel(private val repository: SharedAlbumRepository) : ViewMode
     }
 
     fun getRefreshedSharedAlbum() {
-        repository.getRefreshedSharedAlbums()
+        repository.getRefreshedSharedAlbum()
     }
 
 }

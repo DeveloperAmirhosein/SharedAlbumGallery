@@ -44,7 +44,7 @@ class DefaultSharedAlbumRepository(private val sharedKey: String) : SharedAlbumR
         )
     }
 
-    override fun getRefreshedSharedAlbums() {
+    override fun getRefreshedSharedAlbum() {
         NetworkManager.service.getSharedAlbum(sharedKey).invalidateCache()
         getSharedAlbum()
     }
